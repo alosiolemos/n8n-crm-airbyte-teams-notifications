@@ -1,0 +1,1237 @@
+{
+  "name": "Notificações operacionais — CRM, Airbyte e Teams — notificacoes — template público",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "CONFIGURE_ID_136",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_137",
+              "name": "id",
+              "value": "={{ $json._id }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_138",
+              "name": "Status do Pulse",
+              "value": "={{ \n  $json.customFields\n    .find(f => f.customField === \"CONFIGURE_ID_139\")\n    ?.v\n    ?.map(item => item.value)\n    .join('\\n')\n}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_140",
+              "name": "Motivo do Pulse",
+              "value": "={{ \n  $json.customFields\n    .find(f => f.customField === \"CONFIGURE_ID_141\")\n    ?.v\n    ?.map(item => item.value)\n    .join('\\n')\n}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_142",
+              "name": "Equipe",
+              "value": "={{ \n  $json.customFields\n    .find(f => f.customField === \"CONFIGURE_ID_143\")\n    ?.v\n    ?.map(item => item.value)\n    .join('\\n')\n}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_144",
+              "name": "Staff",
+              "value": "={{ $json.staff.fullname }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_145",
+              "name": "Data do Pulse",
+              "value": "={{ \n  (() => {\n    const d = new Date(\n      $json.customFields\n        ?.find(f => f.customField === \"CONFIGURE_ID_146\")\n        ?.v\n    );\n\n    const dia = String(d.getDate()).padStart(2, '0');\n    const mes = String(d.getMonth() + 1).padStart(2, '0');\n    const ano = String(d.getFullYear());\n\n    return `${dia}/${mes}/${ano}`;\n  })()\n}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_147",
+              "name": "=Comentário sobre o Pulse",
+              "value": "={{\n  $json.customFields\n    ?.find(f => f.customField === \"CONFIGURE_ID_148\")\n    ?.v\n    ?? null\n}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_149",
+              "name": "Produtos contratados",
+              "value": "={{\n  $json.customFields\n    ?.find(f => f.customField === \"CONFIGURE_ID_150\")\n    ?.v.map(item => item.value).join(', ')\n    ?? \"🟠 Produto não informado\"\n}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_151",
+              "name": "MRR",
+              "value": "={{ \n  $('Deals').item.json.amount \n    ? 'R$ ' + Number($('Deals').item.json.amount).toLocaleString('pt-BR', {\n        minimumFractionDigits: 2,\n        maximumFractionDigits: 2\n      })\n    : '🟠 MRR não informado'\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -192,
+        48
+      ],
+      "id": "1488079f-2d13-4c64-90f4-2475d0e65e80",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "## Notificações operacionais — CRM, Airbyte e Teams\nTemplate público inativo. Bloco 2. Consulte docs/arquitetura.md.",
+        "height": 364,
+        "width": 1148,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1008,
+        32
+      ],
+      "id": "9fb1873f-0303-4c2b-ae9f-acfc8a4b3350",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Notificações operacionais — CRM, Airbyte e Teams\nTemplate público inativo. Bloco 3. Consulte docs/arquitetura.md.",
+        "height": 300,
+        "width": 1148,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1008,
+        -304
+      ],
+      "id": "695bcb50-b8c3-487e-b609-a0e03d1f2db8",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "CONFIGURE_ID_155",
+              "name": "user_id_name",
+              "value": "={{ $json.body.user_id_name && $json.body.user_id_name.includes(\"Jonathan Fuzari\") \n    ? \"Diego Santin\" \n    : $json.body.user_id_name }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_156",
+              "name": "user_id_email",
+              "value": "={{ $json.body.user_id_email && $json.body.user_id_email.includes(\"contato@example.com\") \n    ? \"contato@example.com\" \n    : $json.body.user_id_email }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_157",
+              "name": "deal_title",
+              "value": "={{ $json.body.deal_title || $json.body.nome_empresa}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_158",
+              "name": "deal_id",
+              "value": "={{ $json.body.deal_id }}",
+              "type": "number"
+            },
+            {
+              "id": "CONFIGURE_ID_159",
+              "name": "owner_name",
+              "value": "={{ $json.body.user_id_name }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_160",
+              "name": "person_email",
+              "value": "={{ $json.body.person_email }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_161",
+              "name": "person_name",
+              "value": "={{ $json.body.person_name }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_162",
+              "name": "person_phone",
+              "value": "={{ $json.body.person_phone }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_163",
+              "name": "Saudação",
+              "value": "={{\n  (() => {\n    const d = new Date(new Date().toLocaleString(\"en-US\", { timeZone: \"America/Sao_Paulo\" }));\n    const hour = d.getHours();\n    let saudacao;\n\n    if (hour >= 1 && hour < 12) {\n      saudacao = \"bom dia\";\n    } else if (hour >= 12 && hour < 18) {\n      saudacao = \"boa tarde\";\n    } else {\n      saudacao = \"boa noite\";\n    }\n\n    return `${saudacao}!`;\n  })()\n}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_164",
+              "name": "Data e hora de criação",
+              "value": "={{ $json.body[\"Data e hora de criação\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_165",
+              "name": "origin",
+              "value": "={{ $json.body.origem || \"-\"}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_166",
+              "name": "canal",
+              "value": "={{ $json.body.canal || \"-\"}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_167",
+              "name": "origem_do_lead",
+              "value": "={{ $json.body.origem_do_lead || \"Outros\"}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_168",
+              "name": "nome_empresa",
+              "value": "={{ $json.body.nome_empresa || \"-\"}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_169",
+              "name": "fonte",
+              "value": "={{ $json.body.fonte || \"-\"}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -512,
+        -176
+      ],
+      "id": "50486e0a-2348-46e0-8e2d-3f0d1e1dbae9",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "toRecipients": "={{ $json.user_id_email }}",
+        "subject": "=🤝 {{ $json.origem_do_lead && $json.origem_do_lead.includes(\"Fusão empresa_demo x Track\") ? \"Track\" : $json.origem_do_lead }} | Novo negócio criado: {{ $json.deal_title }} - {{ DateTime.fromFormat($json[\"Data e hora de criação\"], \"yyyy-MM-dd HH:mm\").toFormat(\"dd/LL HH:mm\") }} - {{ $json.canal }} ",
+        "bodyContent": "=<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n</head>\n<body style=\"font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 14px;\">\n  <p>Olá <strong>{{ $json.user_id_name }},</strong> {{ $json[\"Saudação\"] }},</p>\n\n  <p>Tudo bem com vc?</p>\n  \n  <p>Você acaba de receber um novo lead:</p>\n  \n  <ul>\n    <li><strong>Negócio:</strong> {{ $json.deal_title }}</li>\n    <li><strong>ID_Negocio:</strong> {{ $json.deal_id }}</li>\n    <li><strong>Empresa:</strong> {{ $json.nome_empresa }}</li>\n    <li><strong>Contato:</strong> {{ $json.person_name }}</li>\n    <li><strong>Email do contato:</strong> {{ $json.person_email }}</li>\n    <li><strong>Telefone do contato:</strong> {{ $json.person_phone }}</li>\n  </ul>\n\n  <p>Dados de origem</p>\n  <p>\n  <ul>\n    <li><strong>Canal:</strong> {{ $json.canal }}</li>\n    <li><strong>Fonte:</strong> {{ $json.fonte }}</li>\n    <li><strong>Origem do Lead:</strong> {{ $json.origem_do_lead }}</li>\n  </ul>\n\n  <p>\n    <a href=\"https://crm.example.com/CONFIGURE_ENDPOINT $json.deal_id }}\" style=\"background:#6CEAA8;color:#fff;padding:03px 05px;text-decoration:none;border-radius:5px;font-weight:bold;\">\n      Ver no CRM\n    </a>\n  </p>\n\n    \n    <p> \n    Att, </p>\n     <p> \n    Time de operações.</p>\n\n  <p style=\"font-size:12px; color:#777;\">\n    Esta é uma mensagem automática.</p>\n  </p>\n</body>\n</html>\n",
+        "additionalFields": {
+          "ccRecipients": "contato@example.com, contato@example.com, contato@example.com",
+          "bodyContentType": "html"
+        }
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        -176
+      ],
+      "id": "993c12f6-17e9-4378-b07f-76f9cfa1cd1d",
+      "name": "Enviar e-mail",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Notificações operacionais — CRM, Airbyte e Teams\nTemplate público inativo. Bloco 6. Consulte docs/arquitetura.md.",
+        "height": 400,
+        "width": 1148,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1008,
+        432
+      ],
+      "id": "32d0d100-0a6a-43b6-87ae-f173374140d2",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ [\"Sync completed\", \"Sync failure\"].some(word => $json[\"body\"][\"blocks\"][0][\"text\"][\"text\"].includes(word)) ? \"Successful or Failed \" : null }}",
+                    "rightValue": "Successful or Failed ",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "CONFIGURE_ID_173"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Successful or Failed "
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "CONFIGURE_ID_174",
+                    "leftValue": "={{ [\"Warning\", \"disabled\"].some(word => $json[\"body\"][\"blocks\"][0][\"text\"][\"text\"].includes(word)) ? \"Warning or Disabled\" : null }}",
+                    "rightValue": "Warning or Disabled",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Warning or Disabled"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -800,
+        560
+      ],
+      "id": "3c7c50e3-52c3-4163-a303-b479dfdea13a",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "CONFIGURE_ID_176",
+              "name": "body",
+              "value": "={{ $json.body.data }}",
+              "type": "object"
+            },
+            {
+              "id": "CONFIGURE_ID_177",
+              "name": "body.text",
+              "value": "={{ $json.body.text }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_178",
+              "name": "Saudação",
+              "value": "={{\n  (() => {\n    const d = new Date(new Date().toLocaleString(\"en-US\", { timeZone: \"America/Sao_Paulo\" }));\n    const hour = d.getHours();\n    let saudacao;\n\n    if (hour >= 1 && hour < 12) {\n      saudacao = \"Good morning!\";\n    } else if (hour >= 12 && hour < 18) {\n      saudacao = \"Good afternoon!\";\n    } else {\n      saudacao = \"Good evening!\";\n    }\n\n    return `${saudacao}!`;\n  })()\n}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_179",
+              "name": "body.blocks",
+              "value": "={{ $json.body.blocks }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -528,
+        464
+      ],
+      "id": "40048d71-54ed-41b8-ab31-2b5e713c9ca6",
+      "name": "Successful or Failed"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "CONFIGURE_ID_181",
+              "name": "Saudação",
+              "value": "={{\n  (() => {\n    const d = new Date(new Date().toLocaleString(\"en-US\", { timeZone: \"America/Sao_Paulo\" }));\n    const hour = d.getHours();\n    let saudacao;\n\n    if (hour >= 1 && hour < 12) {\n      saudacao = \"Good morning!\";\n    } else if (hour >= 12 && hour < 18) {\n      saudacao = \"Good afternoon!\";\n    } else {\n      saudacao = \"Good evening!\";\n    }\n\n    return `${saudacao}!`;\n  })()\n}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_182",
+              "name": "body",
+              "value": "={{ $json.body }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -528,
+        640
+      ],
+      "id": "9ad13e57-0f56-4bf7-8502-f09b7e2bf3bd",
+      "name": "Warning or Disabled"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "demo-notificacoes-9",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -960,
+        560
+      ],
+      "id": "db71b29f-e39f-4f26-b02d-a94fc49b6215",
+      "name": "AIRBYTE",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "channelMessage",
+        "teamId": {
+          "__rl": true,
+          "value": "CONFIGURE_ID_185",
+          "mode": "list"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "19:contato@example.com2",
+          "mode": "list"
+        },
+        "contentType": "html",
+        "message": "=<!DOCTYPE html>\n<html lang=\"en\">\n<body>\n  <div class=\"section card\">\n    <p>Hello, <b>{{ $json[\"Saudação\"] }}</b></p>\n    <br>\n    <p><b>{{ $json.body.blocks[0].text.text }} \"🟠\"</b></p>\n    <br>\n    <p>{{ $json.body.blocks[1].text.text }}</p>\n    <br>\n    <p><b>Source:</b> <a href=\"{{ $json.body.blocks[2].fields[1].text }}\">{{ ($json.body.blocks[2].fields[0].text.replace(\"*\",\"\")).replace(\"*\",\"\") }}</a>\n<br>\n       <b>Destination:</b> <a href=\"{{ $json.body.blocks[2].fields[3].text }}\">{{ ($json.body.blocks[2].fields[2].text.replace(\"*\",\"\")).replace(\"*\",\"\") }}</a>\n<br>\n       <b>Duration:</b></b> {{ $json.body.blocks[2].fields[5].text }}</p><br>\n\n    <p><b>Failure reason:</b><br>\n       {{ $json.body.blocks[1].text.text }}</p><br>\n\n    <p><b>Sync Summary:</b><br>\n       {{ $json.body.blocks[4].text.text.replace(\"*Sync Summary:*\",\"\") }}</p><br>\n    \n    <p><b>Observação:</b><br>\n       {{ $json.body.text }}\n\n  </div>\n</body>\n</html>\n\n\n",
+        "options": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.microsoftTeams",
+      "typeVersion": 2,
+      "position": [
+        -176,
+        640
+      ],
+      "id": "a6f3f169-96c5-4229-8764-23d73d0db71b",
+      "name": "Warning or Disabled Teams",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "channelMessage",
+        "teamId": {
+          "__rl": true,
+          "value": "CONFIGURE_ID_185",
+          "mode": "list"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "19:contato@example.com2",
+          "mode": "list"
+        },
+        "contentType": "html",
+        "message": "=<!DOCTYPE html>\n<html lang=\"en\">\n<body>\n  <div class=\"section card\">\n    <p>Hello, <b>{{ $json[\"Saudação\"] }}</b></p>\n    <br>\n    <p><b>{{ $json.body.success ? \"Sync completed 🟢\" : \"Sync failure occurred 🔴\" }}: <a href=\"{{ $json.body.connection.url }}\">{{ $json.body.connection.name }}</a>\n</b></p>\n    <br>\n    <p><b>Source:</b> <a href=\"{{ $json.body.source.url }}\">{{ $json.body.source.name }}</a>\n<br>\n       <b>Destination:</b> <a href=\"{{ $json.body.destination.url }}\">{{ $json.body.destination.name }}</a>\n<br>\n       <b>Duration:</b></b> {{ $json.body.durationFormatted }}</p><br>\n\n    <p><b>Failure reason:</b>\n    <p>{{ $json.body.errorMessage || \"Synn Ok! 🟢\" }}</p><br>\n\n    <p><b>Sync Summary:</b><br>\n{{ $json.body.blocks[3]?.text?.text ? $json.body.blocks[3].text.text.replace(\"*Sync Summary:*\",\"\") : $json.body.blocks[2]?.text?.text.replace(\"*Sync Summary:*\",\"\") }}\n</p><br>\n    \n    <p><b>Observação:</b><br>\n       {{ $json.body.text }}\n\n  </div>\n</body>\n</html>\n\n\n",
+        "options": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.microsoftTeams",
+      "typeVersion": 2,
+      "position": [
+        -176,
+        464
+      ],
+      "id": "93ad251c-7fe7-459d-9236-76a6c4493f5b",
+      "name": "Successful or Failed Teams",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "demo-notificacoes-12",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -960,
+        -176
+      ],
+      "id": "5520b745-4e23-4a4b-b2c8-52c15cd5906a",
+      "name": "PIPEDRIVE",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Notificações operacionais — CRM, Airbyte e Teams\nTemplate público inativo. Bloco 14. Consulte docs/arquitetura.md.",
+        "height": 372,
+        "width": 300,
+        "color": 6
+      },
+      "id": "f32e3cba-c95b-463b-acff-c6297c40e8a2",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1328,
+        32
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Notificações operacionais — CRM, Airbyte e Teams\nTemplate público inativo. Bloco 15. Consulte docs/arquitetura.md.",
+        "height": 292,
+        "width": 300,
+        "color": 7
+      },
+      "id": "02b186f1-269f-4bd3-b127-bee2c61a77b2",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1328,
+        -304
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Notificações operacionais — CRM, Airbyte e Teams\nTemplate público inativo. Bloco 16. Consulte docs/arquitetura.md.",
+        "height": 404,
+        "width": 300,
+        "color": 5
+      },
+      "id": "f35a85a6-4e33-4c05-941a-85c7ffeab6a1",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1328,
+        432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "demo-notificacoes-16",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -960,
+        160
+      ],
+      "id": "1fbbd64d-7ed0-41c9-a801-0ea51a428563",
+      "name": "MAGNET",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "CONFIGURE_ID_194",
+              "leftValue": "={{ \n  $json.customFields\n    .find(f => f.customField === \"CONFIGURE_ID_139\")\n    ?.v\n    ?.some(item => \n      item.value\n        ?.trim()\n        ?.toLowerCase()\n        ?.includes(\"alto risco\")\n      ||\n      item.value\n        ?.trim()\n        ?.toLowerCase()\n        ?.includes(\"risco severo\")\n    )\n}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "CONFIGURE_ID_195",
+              "leftValue": "={{ \n  new Date($json.customFields\n    ?.find(f => f.customField === \"CONFIGURE_ID_146\")\n    ?.v)\n    .toISOString()\n    .slice(0, 10)===\n  new Date()\n    .toISOString()\n    .slice(0, 10)\n}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "CONFIGURE_ID_196",
+              "leftValue": "={{\n  !!(\n    $json.customFields\n      ?.find(f => f.customField === \"CONFIGURE_ID_197\")\n      ?.v &&\n    new Date(\n      $json.customFields.find(\n        f => f.customField === \"CONFIGURE_ID_197\"\n      ).v\n    )\n      .toISOString()\n      .slice(0, 10) ===\n    new Date()\n      .toISOString()\n      .slice(0, 10)\n  )\n}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -496,
+        160
+      ],
+      "id": "96cac1a2-52b4-4950-b518-b704c147f391",
+      "name": "Alto Risco"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        256
+      ],
+      "id": "a20b28af-bdf7-4cba-9e77-dd45756e845f",
+      "name": "No Operation"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://crm.example.com/CONFIGURE_ENDPOINT",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n    \"grant_type\": \"client_credentials\",\n    \"client_id\": \"CONFIGURE_SECRET_PRIVATELY\",\n    \"client_secret\": \"CONFIGURE_SECRET_PRIVATELY\",\n    \"scope\": \"offline_access\"\n  }",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -816,
+        160
+      ],
+      "id": "9f32babf-cacf-49e0-819b-1d95124e2e1a",
+      "name": "Token empresa",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "=https://crm.example.com/CONFIGURE_ENDPOINT'MAGNET').item.json.body.data.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -656,
+        160
+      ],
+      "id": "90a56afc-320e-4d79-bdd8-8454f6b16566",
+      "name": "Deals",
+      "alwaysOutputData": false,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "channelMessage",
+        "teamId": {
+          "__rl": true,
+          "value": "CONFIGURE_ID_202",
+          "mode": "list"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "19:contato@example.com2",
+          "mode": "list"
+        },
+        "contentType": "html",
+        "message": "=<b><i>PULSE {{ $('Edit Fields').item.json['Status do Pulse']?.toUpperCase() }} - {{ $('Edit Fields').item.json.title?.toUpperCase() }}</i></b><br><br>\n\nOlá! <b>Pessoal</b>, {{\n  (() => {\n    const d = new Date(new Date().toLocaleString(\"en-US\", { timeZone: \"America/Sao_Paulo\" }));\n    const hour = d.getHours();\n    let saudacao;\n\n    if (hour >= 1 && hour < 12) {\n      saudacao = \"Bom dia\";\n    } else if (hour >= 12 && hour < 18) {\n      saudacao = \"Boa tarde\";\n    } else {\n      saudacao = \"Boa noite\";\n    }\n\n    return `${saudacao}! 🤖`;\n  })()\n}}<br>\n<br>\n\nUm cliente foi <b>marcado com Pulso de {{ $('Edit Fields').item.json['Status do Pulse'] }}</b> hoje,{{ $('Edit Fields').item.json['Data do Pulse'] }} no CRM e requer atenção imediata.<br><br>\n\n<b>📌 Informações do cliente:</b>\n<ul>\n  <li><b>Contrato:</b> {{ $('Edit Fields').item.json.title }}</li>\n  <li><b>Status do Pulse:</b> {{ $('Edit Fields').item.json['Status do Pulse'] }}</li>\n  <li><b>Equipe responsável:</b> {{ $('Edit Fields').item.json.Equipe }}</li>\n  <li><b>CS Responsável:</b> {{ $json.Staff }}</li>\n  <li><b>Produtos contratados:</b> {{ $json['Produtos contratados'] }}</li>\n  <li><b>MRR:</b> {{ $json.MRR }}</li>\n</ul>\n\n<b>⚠️ Motivos identificados:</b>\n<ul>\n  <li>{{ $('Edit Fields').item.json['Motivo do Pulse'] }}</li>\n</ul>\n\n<b>🗨️ Comentário sobre o Pusle:</b>\n<ul>\n  <li> {{ $('Edit Fields').item.json['Comentário sobre o Pulse'] }}</li>\n</ul>\n\nO <b>TIME de CS</b> já esta ciente e atuando para controlar a temperatura.\n<br>\n<br>\n<p>\n  <p>\n  <a href=\"https://crm.example.com/CONFIGURE_ENDPOINT $('Edit Fields').item.json.id }}\">\n    <b>🖥️🔎 VER NO CRM</b>\n  </a>\n</p>\n<br>\n<i>Att.<br>\nTime de Operações ⚙️</i>",
+        "options": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.microsoftTeams",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        48
+      ],
+      "id": "d679d544-62a5-4e5f-8a3e-615ff6e40c9a",
+      "name": "Teams",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://crm.example.com/CONFIGURE_ENDPOINT $('Deals').item.json._id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Token empresa').item.json.access_token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"customFields\": [\n        {\n           \"customField\": \"CONFIGURE_ID_197\",\n           \"k\":\"Pulse lastActivity teams\",\n           \"v\":\"{{new Date().toISOString()}}\"\n        }\n    ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -352,
+        48
+      ],
+      "id": "f5301455-483d-4cb8-be7c-9cedbfdcd106",
+      "name": "Pulse Last Act",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Notificações operacionais — CRM, Airbyte e Teams\nTemplate público inativo. Bloco 24. Consulte docs/arquitetura.md.",
+        "height": 300,
+        "width": 1148,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1008,
+        -640
+      ],
+      "id": "3b8a59a7-6260-46ca-955a-3f69d25cce4b",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "demo-notificacoes-24",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -992,
+        -528
+      ],
+      "id": "19f31001-21a1-4f25-95ed-31f1fe2e9878",
+      "name": "PIPEDRIVE1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Notificações operacionais — CRM, Airbyte e Teams\nTemplate público inativo. Bloco 26. Consulte docs/arquitetura.md.",
+        "height": 292,
+        "width": 300,
+        "color": 7
+      },
+      "id": "671737ae-dff9-442f-9a13-da91f6c55266",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1328,
+        -640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://demo.pipedrive.com/v1/leadFields?start=0&api_token=CONFIGURE_SECRET_PRIVATELY",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -832,
+        -528
+      ],
+      "id": "70793603-0cb2-4281-8c3b-4d8115038a33",
+      "name": "leadFields",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "CONFIGURE_ID_155",
+              "name": "user_id_name",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.nome_do_proprietario_do_lead && $('PIPEDRIVE1').item.json.body.nome_do_proprietario_do_lead.includes(\"Jonathan Fuzari\") \n    ? \"Diego Santin\" \n    : $('PIPEDRIVE1').item.json.body.nome_do_proprietario_do_lead }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_156",
+              "name": "user_id_email",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.email_do_proprietario_do_lead && $('PIPEDRIVE1').item.json.body.email_do_proprietario_do_lead.includes(\"contato@example.com\") \n    ? \"contato@example.com\" \n    : $('PIPEDRIVE1').item.json.body.email_do_proprietario_do_lead }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_157",
+              "name": "lead_name",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.titulo_do_lead ?? $('PIPEDRIVE1').item.json.body.nome_da_pessoa_de_contato_do_lead ?? $('PIPEDRIVE1').item.json.body.nome_da_organizacao_do_lead}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_158",
+              "name": "lead_id",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.id_lead }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_159",
+              "name": "owner_name",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.nome_do_proprietario_do_lead && $('PIPEDRIVE1').item.json.body.nome_do_proprietario_do_lead.includes(\"Jonathan Fuzari\") \n    ? \"Diego Santin\" \n    : $('PIPEDRIVE1').item.json.body.nome_do_proprietario_do_lead }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_160",
+              "name": "person_email",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.email_da_pessoa_de_contato_do_lead }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_161",
+              "name": "person_name",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.nome_da_pessoa_de_contato_do_lead }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_162",
+              "name": "person_phone",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.telefone_contato??null }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_163",
+              "name": "Saudação",
+              "value": "={{\n  (() => {\n    const d = new Date(new Date().toLocaleString(\"en-US\", { timeZone: \"America/Sao_Paulo\" }));\n    const hour = d.getHours();\n    let saudacao;\n\n    if (hour >= 1 && hour < 12) {\n      saudacao = \"bom dia\";\n    } else if (hour >= 12 && hour < 18) {\n      saudacao = \"boa tarde\";\n    } else {\n      saudacao = \"boa noite\";\n    }\n\n    return `${saudacao}!`;\n  })()\n}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_164",
+              "name": "Data e hora de criação",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.data_de_criacao_do_lead }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_165",
+              "name": "origin",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.origem }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_209",
+              "name": "canal",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.channel ?? $('PIPEDRIVE1').item.json.body.channel}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_167",
+              "name": "origem_do_lead",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.origem_do_lead }} {{ $('PIPEDRIVE1').item.json.body.origem }}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_168",
+              "name": "nome_empresa",
+              "value": "={{ $('PIPEDRIVE1').first().json.body.nome_da_organizacao_do_lead\n    ?.trim()\n    ? $('PIPEDRIVE1').first().json.body.nome_da_organizacao_do_lead\n    : `Não identificada.`}}",
+              "type": "string"
+            },
+            {
+              "id": "CONFIGURE_ID_169",
+              "name": "fonte",
+              "value": "={{ $('PIPEDRIVE1').item.json.body.fonte || \"-\"}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -528,
+        -528
+      ],
+      "id": "6d410a0e-225e-4e51-bfc5-0c9821e1fee5",
+      "name": "Edit leadFields"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pegamos o e-mail da pessoa de contato do lead\nconst email =\n  $('PIPEDRIVE1').first().json.body.email_da_pessoa_de_contato_do_lead\n    ?.toLowerCase() || \"\";\n// Lista de domínios pessoais conhecidos\nconst personalDomains = [\n  \"gmail.com\",\n  \"hotmail.com\",\n  \"outlook.com\",\n  \"live.com\",\n  \"icloud.com\",\n  \"yahoo.com\",\n  \"yahoo.com.br\",\n  \"bol.com.br\",\n  \"terra.com.br\",\n  \"uol.com.br\",\n  \"msn.com\",\n  \"aol.com\",\n  \"protonmail.com\",\n  \"zoho.com\",\n  \"ymail.com\",\n  \"gmx.com\",\n  \"me.com\"\n];\n\n// Função para extrair domínio do e-mail\nfunction getDomain(email) {\n  const parts = email.split(\"@\");\n  return parts.length > 1 ? parts[1] : \"\";\n}\n\nconst domain = getDomain(email);\n\n// Checa se domínio está na lista\nlet tipo = \"Domínio Corporativo\";\nif (personalDomains.some(d => domain.includes(d))) {\n  tipo = \"Domínio ser pessoal\";\n}\n\nreturn {\n  email,\n  dominio: domain,\n  classificacao: tipo\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -688,
+        -528
+      ],
+      "id": "5a350891-f19b-47d6-aa10-612a51f2088d",
+      "name": "TIPO DE E-MAIL1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "CONFIGURE_ID_212",
+              "leftValue": "={{ \n  $('PIPEDRIVE1').first().json.body.origem === \"ManuallyCreated\" ||\n  $('PIPEDRIVE1').first().json.body.origem === \"Importação\" ||\n  $('PIPEDRIVE1').first().json.body.origem === \"Criado manualmente\" ||\n  $('PIPEDRIVE1').first().json.body.fonte_do_lead === \"ManuallyCreated\" ||\n  $('PIPEDRIVE1').first().json.body.fonte_do_lead === \"Criado manualmente\"\n  ? \"Outbound\"\n  : \"Inbound\"\n}}",
+              "rightValue": "Inbound",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -352,
+        -528
+      ],
+      "id": "49926bbd-9185-486b-be52-bb3539552ef1",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "toRecipients": "={{$json.user_id_email }} ",
+        "subject": "=🙋 {{ $json.canal || $('PIPEDRIVE1').item.json.body.origem }} - {{ \n  ($json.canal?.includes(\"Track\") ||\n   $json.origem_do_lead?.includes(\"Track\"))\n    ? \"Track\"\n    : $json.origem_do_lead\n}} | Novo lead: {{ $json.lead_name }} - {{ DateTime.fromFormat($json[\"Data e hora de criação\"], \"yyyy-MM-dd HH:mm\").toFormat(\"dd/LL HH:mm\") }}",
+        "bodyContent": "=<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n</head>\n<body style=\"font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 14px;\">\n  <p>Olá <strong>{{ $json.user_id_name }},</strong> {{ $json[\"Saudação\"] }},</p>\n\n  <p>Tudo bem com vc?</p>\n  \n  <p>Você acaba de receber um novo lead:</p>\n  \n  <ul>\n    <li><strong>Lead:</strong> {{ $json.lead_name?.toUpperCase() }}</li>\n    <li><strong>ID_Lead:</strong> {{ $json.lead_id }}</li>\n    <li><strong>Email do contato:</strong> {{ $json.person_email }}</li>\n    <li><strong>Telefone do contato:</strong> {{ $json.person_phone }}</li>\n  </ul>\n\n  <p>Dados de origem</p>\n  <p>\n  <ul>\n    <li><strong>Canal:</strong> {{ $json.canal || $('PIPEDRIVE1').item.json.body.origem}}</li>\n    <li><strong>Origem do Lead:</strong> {{ $json.origem_do_lead || $('PIPEDRIVE1').item.json.body.origem}} </li>\n  </ul>\n\n  <p>\n    <a href=\"https://crm.example.com/CONFIGURE_ENDPOINT $json.lead_id }}\" style=\"background:#6CEAA8;color:#fff;padding:03px 05px;text-decoration:none;border-radius:5px;font-weight:bold;\">\n      Ver no CRM\n    </a>\n  </p>\n\n    \n    <p> \n    Att, </p>\n     <p> \n    Time de operações.</p>\n\n  <p style=\"font-size:12px; color:#777;\">\n    Esta é uma mensagem automática.</p>\n  </p>\n</body>\n</html>\n",
+        "additionalFields": {
+          "bccRecipients": "contato@example.com ",
+          "ccRecipients": "contato@example.com, contato@example.com",
+          "importance": "High",
+          "bodyContentType": "html",
+          "replyTo": "contato@example.com"
+        }
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        -176,
+        -608
+      ],
+      "id": "9950ad1b-e7b0-453d-b629-3c087859497d",
+      "name": "E-mail para todos",
+      "alwaysOutputData": false,
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -464
+      ],
+      "id": "bb4b0e12-cc31-4a01-93f1-c31c83293d8b",
+      "name": "No Operation1"
+    },
+    {
+      "parameters": {
+        "resource": "chatMessage",
+        "chatId": {
+          "__rl": true,
+          "value": "19:CONFIGURE_ID_216@thread.v2",
+          "mode": "list"
+        },
+        "contentType": "html",
+        "message": "=<b><span style=\"color:#6CEAA8;\">NOVO LEAD - {{ $('Edit leadFields').item.json.canal }}</span></b><br><br>\n\nOlá! <b>Pessoal</b>, {{\n(() => {\n  const d = new Date(new Date().toLocaleString(\"en-US\", { timeZone: \"America/Sao_Paulo\" }));\n  const hour = d.getHours();\n  let saudacao;\n\n  if (hour >= 1 && hour < 12) {\n    saudacao = \"Bom dia\";\n  } else if (hour >= 12 && hour < 18) {\n    saudacao = \"Boa tarde\";\n  } else {\n    saudacao = \"Boa noite\";\n  }\n\n  return `${saudacao}! 🤖`;\n})()\n}}<br><br>\n\nTudo bem com vcs?<br><br>\n\nVocê acaba de receber um novo lead:<br><br>\n\n<ul>\n  <li><strong>Lead:</strong> {{ $('Edit leadFields').first().json.lead_name?.toUpperCase() }} </li>\n  <li><strong>Email do contato:</strong> {{ $('Edit leadFields').first().json.person_email }}</li>\n  <li><strong>Telefone do contato:</strong> {{ $('Edit leadFields').first().json.person_phone ?? \"Não informado\" }}</li>\n  <li><strong>Responsavél Comercial:</strong> {{ $('Edit leadFields').first().json.user_id_name }} </li>\n  <li><strong>Tipo de E-mail:</strong> {{ $('TIPO DE E-MAIL1').first().json.classificacao }}\n</li>\n</ul>\n\n<br>\n\n<p><strong>📍 Dados de origem</strong></p>\n\n<ul>\n  <li><strong>Canal:</strong> {{ $('Edit leadFields').item.json.canal }} </li>\n  <li><strong>Origem do Lead:</strong> {{ $('Edit leadFields').item.json.origem_do_lead }}</li>\n</ul>\n\n<br>\n\n<a \n  href=\"https://crm.example.com/CONFIGURE_ENDPOINT $('Edit leadFields').item.json.lead_id }}\" style=\"background:#6CEAA8;color:#fff;padding:03px 05px;text-decoration:none;border-radius:5px;font-weight:bold;\">\n  <b><span style=\"color:#6CEAA8;\">Ver no PIPEDRIVE</span></b><br><br>\n</a>\n\n<br><br>\n\nAtt,<br>\nTime de operações.\n\n<br><br>\n\n<p style=\"font-size:12px; color:#777;\">\nEsta é uma mensagem automática.\n</p>\n",
+        "options": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.microsoftTeams",
+      "typeVersion": 2,
+      "position": [
+        -32,
+        -608
+      ],
+      "id": "59af56c2-b3a5-42f5-b914-c6bb058c7280",
+      "name": "MQL Levantada de Mão",
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Teams",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Enviar e-mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Successful or Failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Warning or Disabled",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Successful or Failed": {
+      "main": [
+        [
+          {
+            "node": "Successful or Failed Teams",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Warning or Disabled": {
+      "main": [
+        [
+          {
+            "node": "Warning or Disabled Teams",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AIRBYTE": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PIPEDRIVE": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MAGNET": {
+      "main": [
+        [
+          {
+            "node": "Token empresa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alto Risco": {
+      "main": [
+        [
+          {
+            "node": "Pulse Last Act",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Token empresa": {
+      "main": [
+        [
+          {
+            "node": "Deals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deals": {
+      "main": [
+        [
+          {
+            "node": "Alto Risco",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Teams": {
+      "main": [
+        []
+      ]
+    },
+    "Pulse Last Act": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PIPEDRIVE1": {
+      "main": [
+        [
+          {
+            "node": "leadFields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "leadFields": {
+      "main": [
+        [
+          {
+            "node": "TIPO DE E-MAIL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit leadFields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TIPO DE E-MAIL1": {
+      "main": [
+        [
+          {
+            "node": "Edit leadFields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "E-mail para todos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "E-mail para todos": {
+      "main": [
+        [
+          {
+            "node": "MQL Levantada de Mão",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar e-mail": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}
